@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Instaplants | Buy Plants Online</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">Instaplants.</div>
+  <nav>
+    <a onclick="showHome()">Home</a>
+    <a href="#">My Orders</a>
+    <a onclick="showCart()">🛒 (<span id="cartCount">0</span>)</a>
+  </nav>
+</header>
+
+<section id="home">
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Bring Nature Home</h1>
+      <p>Curated collection of premium indoor plants to breathe life into your living spaces.</p>
+      <button onclick="scrollToProducts()">Shop Now</button>
+    </div>
+  </div>
+
+  <section class="categories">
+    <h2>Explore Collections</h2>
+    <div class="category-grid">
+      <div class="category-wrapper">
+        <div class="category-card" onclick="filterCategory('all')">
+          <img src="https://i.postimg.cc/bwzVWbwq/Whats-App-Image-2025-12-14-at-15-43-07-ca753054.jpg">
+        </div>
+        <p>All</p>
+      </div>
+
+      <div class="category-wrapper">
+        <div class="category-card" onclick="filterCategory('indoor')">
+          <img src="https://i.postimg.cc/MZCgHhPt/Whats-App-Image-2025-12-14-at-14-07-11-adefb8bc.jpg">
+        </div>
+        <p>Indoor</p>
+      </div>
+
+      <div class="category-wrapper">
+        <div class="category-card" onclick="filterCategory('outdoor')">
+          <img src="https://images.unsplash.com/photo-1505322409559-0797143f290d">
+        </div>
+        <p>Outdoor</p>
+      </div>
+
+      <div class="category-wrapper">
+        <div class="category-card" onclick="filterCategory('succulent')">
+          <img src="https://images.unsplash.com/photo-1510344464871-3375b4f2c0dc">
+        </div>
+        <p>Succulent</p>
+      </div>
+      
+      <div class="category-wrapper">
+        <div class="category-card" onclick="filterCategory('flowering')">
+          <img src="https://images.unsplash.com/photo-1498305004735-e6f5c80a2b5e">
+        </div>
+        <p>Flowering</p>
+      </div>
+    </div>
+  </section>
+
+<section class="products" id="products">
+  <h2>Popular Plants</h2>
+  <div class="product-grid" id="productGrid"></div>
+</section>
+
+
+<section id="about" class="hidden about">
+  </section>
+
+<section id="cart" class="cart hidden">
+  <h2>Your Cart</h2>
+  <div id="emptyCart">🛒 Your cart is empty</div>
+  <div id="cartList"></div>
+
+  <div class="cart-summary">
+    <p>Subtotal: ₹<span id="subtotal">0</span></p>
+    <p>Delivery: ₹49</p>
+    <h3>Total: ₹<span id="total">0</span></h3>
+    <button class="checkout-btn" onclick="showCheckout()">Proceed to Checkout</button>
+  </div>
+</section>
+
+<section id="checkout" class="checkout hidden">
+  <form class="checkout-form" onsubmit="placeOrder(event)">
+    <h3>Customer Details</h3>
+    <input id="name" placeholder="Full Name" required>
+    <input id="phone" placeholder="Mobile Number" required>
+    <input id="email" placeholder="Email" required>
+
+    <h3>Address</h3>
+    <input id="house" placeholder="House / Flat No." required>
+    <input id="street" placeholder="Street / Area" required>
+    <input id="city" placeholder="City" required>
+    <input id="state" placeholder="State" required>
+    <input id="pincode" placeholder="Pincode" required>
+
+    <textarea id="instructions" placeholder="Delivery Instructions (Optional)"></textarea>
+
+    <h3>Payment</h3>
+    <label><input type="radio" name="payment" value="COD" required> Cash on Delivery</label>
+
+    <button type="submit" class="checkout-btn">Place Order</button>
+  </form>
+</section>
+
+<section id="productModal" class="product-modal hidden">
+    <div class="modal-content">
+        <button class="modal-close-btn" onclick="hideProductDetails()">✕</button>
+
+        <div class="modal-main">
+            <div class="modal-left">
+                <img id="modalImage" src="" alt="Product Image">
+            </div>
+
+            <div class="modal-right">
+                <span id="modalCategory" class="category-label"></span>
+                <h1 id="modalName"></h1>
+                <p class="modal-price">₹<span id="modalPrice"></span></p>
+                <p id="modalDescription" class="modal-description"></p>
+                
+                <div class="modal-features">
+                    <div class="feature-item">
+                        <i class="fas fa-shipping-fast"></i>
+                        <span>Same Day Delivery</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>Health Guarantee</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-wind"></i>
+                        <span>Air Purifying</span>
+                    </div>
+                </div>
+
+                <button id="modalAddToCartBtn" class="checkout-btn modal-cart-btn">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                
+                <div class="care-guide">
+                    <h3>Plant Guru Care Guide</h3>
+                    <ul id="modalCareTips">
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="footer">
+  <div class="footer-section about-us">
+    <h3>About Us</h3>
+    <p>Instaplants was born from a passion for bringing the serenity of nature into modern urban living. We strive to deliver not just plants, but living companions that elevate your daily life.</p>
+    <p>We understand that waiting is the hardest part. That's why we promise **guaranteed delivery within 24 hours**. From our nursery to your doorstep in just one day, ensuring your plants arrive fresh, healthy, and ready to thrive. We source ethically, ship sustainably, and provide lifetime support for every leaf you adopt.</p>
+    <br>
+    <a href="#">Instagram</a>
+    <a href="#">Twitter</a>
+    <a href="#">Facebook</a>
+  </div>
+
+  <div class="footer-section contact">
+    <h3>Contact</h3>
+    <p>123 Green Avenue, Garden City</p>
+    <a href="mailto:support@instaplants.com">support@instaplants.com</a>
+    <p>+91 98765 43210</p>
+    <br>
+    <p>© 2024 Instaplants.</p>
+  </div>
+</footer>
+
+
+<div id="toast" class="toast">Item added</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script src="script.js"></script>
+</body>
+</html>
